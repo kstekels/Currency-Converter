@@ -5,7 +5,7 @@ import { Alert } from "react-native";
 export const conversionContext = createContext();
 
 const DEFAULT_BASE_CURRENCY = "USD";
-const DEFAULT_QUOTE_CURRENCY = "EUR";
+const DEFAULT_QUOTE_CURRENCY = "GBP";
 
 export const ConversionContextProvider = ({ children }) => {
   const [baseCurrency, _setBaseCurrency] = useState(DEFAULT_BASE_CURRENCY);
