@@ -87,16 +87,14 @@ export default ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle={"light-content"} backgroundColor={colors.blue} />
       <ScrollView scrollEnabled={scrollEnabled}>
+        <SafeAreaView style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.push("Options")}>
+            <Entypo name="cog" size={32} color={colors.white} />
+          </TouchableOpacity>
+        </SafeAreaView>
         <View style={styles.content}>
-          <StatusBar barStyle={"light-content"} />
-
-          <SafeAreaView style={styles.header}>
-            <TouchableOpacity onPress={() => navigation.push("Options")}>
-              <Entypo name="cog" size={32} color={colors.white} />
-            </TouchableOpacity>
-          </SafeAreaView>
-
           <View style={styles.logoContainer}>
             <Image
               source={require("../assets/images/background.png")}
