@@ -1,19 +1,44 @@
-import React, { createContext } from "react";
-import { useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
+import { api } from "./api";
+import { Alert } from "react-native";
 
 export const conversionContext = createContext();
 
-// ConversionContext.Provider
-// ConversionContext.Consumer
+const DEFAULT_BASE_CURRENCY = "USD";
+const DEFAULT_QUOTE_CURRENCY = "EUR";
 
 export const ConversionContextProvider = ({ children }) => {
-  const [baseCurrency, setBaseCurrency] = useState("USD");
-  const [quoteCurrency, setQuoteCurrency] = useState("EUR");
+  const [baseCurrency, _setBaseCurrency] = useState(DEFAULT_BASE_CURRENCY);
+  const [quoteCurrency, setQuoteCurrency] = useState(DEFAULT_QUOTE_CURRENCY);
+  const [date, setDate] = useState();
+  const [rates, setRates] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  const setBaseCurrency = (currency) => {
+    setIsLoading(true);
+    return api(`/latest?base=${currency}`)
+      .then((response) => {
+        _setBaseCurrency(currency);
+        setDate(response.date);
+        setRates(response.rates);
+      })
+      .catch((error) => {
+        console.log(error);
+        Alert.alert("Sorry, something went wrong");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   const swapCurrencies = () => {
     setBaseCurrency(quoteCurrency);
     setQuoteCurrency(baseCurrency);
   };
+
+  useEffect(() => {
+    setBaseCurrency(DEFAULT_BASE_CURRENCY);
+  }, []);
 
   const contextValue = {
     baseCurrency,
@@ -21,6 +46,9 @@ export const ConversionContextProvider = ({ children }) => {
     swapCurrencies,
     setBaseCurrency,
     setQuoteCurrency,
+    date,
+    rates,
+    isLoading,
   };
 
   return (
