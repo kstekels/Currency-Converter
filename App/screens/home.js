@@ -7,13 +7,15 @@ import {
   Dimensions,
   Text,
   ScrollView,
-  Keyboard,
+  TouchableOpacity,
 } from "react-native";
 import colors from "../constants/colors";
 import { ConversionInput } from "../components/ConversionInput";
 import { format } from "date-fns";
 import { Button } from "../components/Button";
 import { KeyboardSpacer } from "../components/KeyboardSpacer";
+import { Entypo } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const screen = Dimensions.get("window");
 
@@ -23,14 +25,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingTop: screen.height * 0.2,
+    paddingTop: screen.height * 0.1,
   },
   logoContainer: {
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 20,
   },
   logoBackground: {
-    width: screen.width * 0.45,
+    width: screen.width / 0.45,
     height: screen.width * 0.45,
   },
   logo: {
@@ -45,14 +48,21 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     textAlign: "center",
   },
+  inputContainer: {
+    marginBottom: 10,
+  },
   text: {
     color: colors.white,
-    fontSize: 13,
+    fontSize: 14,
     textAlign: "center",
+  },
+  header: {
+    alignItems: "flex-end",
+    marginHorizontal: 20,
   },
 });
 
-export default () => {
+export default ({ navigation }) => {
   const baseCurrency = "USD";
   const quoteCurrency = "EUR";
   const conversionRate = 1.03;
@@ -80,6 +90,13 @@ export default () => {
       <ScrollView scrollEnabled={scrollEnabled}>
         <View style={styles.content}>
           <StatusBar barStyle={"light-content"} />
+
+          <SafeAreaView style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.push("Options")}>
+              <Entypo name="cog" size={32} color={colors.white} />
+            </TouchableOpacity>
+          </SafeAreaView>
+
           <View style={styles.logoContainer}>
             <Image
               source={require("../assets/images/background.png")}
@@ -94,21 +111,22 @@ export default () => {
           </View>
 
           <Text style={styles.textHeader}>Currency Converter</Text>
+          <View style={styles.inputContainer}>
+            <ConversionInput
+              text={baseCurrency}
+              value="123"
+              onBtnPress={() => alert("todo!")}
+              onChangeText={(text) => console.log("text", text)}
+              keyboardType="numeric"
+            />
 
-          <ConversionInput
-            text={baseCurrency}
-            value="123"
-            onBtnPress={() => alert("todo!")}
-            onChangeText={(text) => console.log("text", text)}
-            keyboardType="numeric"
-          />
-
-          <ConversionInput
-            text="EUR"
-            value="123"
-            onBtnPress={() => alert("todo!")}
-            editable={false}
-          />
+            <ConversionInput
+              text="EUR"
+              value="123"
+              onBtnPress={() => alert("todo!")}
+              editable={false}
+            />
+          </View>
 
           <Text
             style={styles.text}

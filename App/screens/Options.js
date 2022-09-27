@@ -3,6 +3,7 @@ import { SafeAreaView, ScrollView, Linking, Alert } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import colors from "../constants/colors";
 import { RowItem, RowSeperator } from "../components/RowItem";
+import { StatusBar } from "expo-status-bar";
 
 const openURL = (url) => {
   Linking.openURL(url).catch(() => {
@@ -13,6 +14,7 @@ const openURL = (url) => {
 export default () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar barStyle={"dark-content"} />
       <ScrollView>
         <RowItem
           text={"Themes"}
