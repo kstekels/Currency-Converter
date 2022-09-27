@@ -113,7 +113,12 @@ export default ({ navigation }) => {
             <ConversionInput
               text={baseCurrency}
               value="123"
-              onBtnPress={() => alert("todo!")}
+              onBtnPress={() =>
+                navigation.push("CurrencyList", {
+                  title: "Base Currency",
+                  activeCurrency: baseCurrency,
+                })
+              }
               onChangeText={(text) => console.log("text", text)}
               keyboardType="numeric"
             />
@@ -121,7 +126,12 @@ export default ({ navigation }) => {
             <ConversionInput
               text="EUR"
               value="123"
-              onBtnPress={() => alert("todo!")}
+              onBtnPress={() =>
+                navigation.push("CurrencyList", {
+                  title: "Quote Currency",
+                  activeCurrency: quoteCurrency,
+                })
+              }
               editable={false}
             />
           </View>
